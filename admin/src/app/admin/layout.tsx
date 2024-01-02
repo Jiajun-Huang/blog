@@ -1,11 +1,13 @@
 "use client";
 
+import { User } from "@/generated-sources/openapi";
 import { checkLoginRequest } from "@/request/login";
 import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -39,21 +41,24 @@ export default function AdminLayout({
 }) {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const pathname = usePathname();
+
   // check login status if not login go to login page
-  // useEffect(() => {
-  //   checkLoginRequest().then((data) => {
-  //     if (data === null) {
-  //       router.replace("/");
-  //     } else {
-  //       setUser(data);
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    checkLoginRequest().then((data) => {
+      console.log(pathname);
+      if (data === null) {
+        router.replace("/");
+      } else {
+        setUser(data);
+      }
+    });
+  }, []);
 
   // go to the page
   const onClick: MenuProps["onClick"] = (e) => {
@@ -77,6 +82,7 @@ export default function AdminLayout({
             <Menu
               theme="dark"
               defaultSelectedKeys={["home"]}
+              selectedKeys={pathname.split("/").slice(1)}
               mode="inline"
               items={items}
               onClick={onClick}

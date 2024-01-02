@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,9 +26,10 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<List<String>> uploadFile(@RequestPart MultipartFile[] files,
-            @RequestPart String path)
+    @PostMapping(value = "/upload", consumes = { "multipart/form-data" })
+    public ResponseEntity<List<String>> uploadFile(
+            @RequestParam MultipartFile[] files,
+            @RequestParam String path)
             throws IOException {
         List<String> filePath = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -39,13 +39,18 @@ public class FileController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("path") String dir) throws IOException {
+    public ResponseEntity<Resource> downloadFile(@RequestParam("path") String dir) {
         Path path = Paths.get(dir);
         Resource resource = fileService.loadFileAsResource(path);
-        return ResponseEntity.ok().contentLength(resource.contentLength())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .header("Content-Disposition", "inline; filename=\"" + path.getFileName().toString() + "\"")
-                .body(resource);
+        try {
+            return ResponseEntity.ok().contentLength(resource.contentLength())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header("Content-Disposition", "inline; filename=\"" + path.getFileName().toString() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            // return null;
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

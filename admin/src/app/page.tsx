@@ -3,14 +3,21 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
-import { loginRequest } from "../request/login";
 
+import { UserControllerApi, UserLoginDto } from "@/generated-sources/openapi";
+import { loginRequestF } from "@/request/login";
 export default function Login() {
   const router = useRouter();
 
   const onSubmit = async (values: any) => {
-    const { username, password } = values;
-    const res = await loginRequest(username, password);
+    const loginRequest: LoginRequest = {
+      userLoginDto: values as UserLoginDto,
+    };
+
+    console.log(JSON.stringify(loginRequest));
+    const user_api = new UserControllerApi();
+    const res = await loginRequestF(values.username, values.password);
+
     console.log(res);
     if (res !== null) {
       router.push("/admin/home");

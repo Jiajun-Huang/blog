@@ -1,3 +1,6 @@
 *.log*
 upload/
 .vscode/
+node_modules/
+databse/
+mysql

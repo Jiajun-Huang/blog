@@ -37,6 +37,4 @@ build/
 *.log.*
 uploads/
 
-*.yml
-application-dev.yml
 application-pro.yml

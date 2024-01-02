@@ -1,0 +1,56 @@
+@import "../../style.variable.scss";
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: $navHeight;
+  padding: 0.4rem 1rem;
+
+  .leftItems {
+    display: flex;
+    flex-direction: row;
+    .navItem {
+      font-weight: 700;
+    }
+  }
+
+  .rightItems {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .navItem {
+    position: relative;
+    text-align: center;
+    padding-right: 1rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex; /* Use flexbox to vertically center */
+    align-items: center; /* Vertically center the text */
+
+    &:hover {
+      color: $hoverColor;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      width: 0%;
+      height: 2px;
+      background-color: $hoverColor;
+      position: absolute;
+      top: 75%;
+      left: 0%;
+      transform: translateY(-50%);
+      opacity: 1;
+      transition: width 0.5s ease-in-out;
+      transform-origin: left center;
+    }
+
+    &:hover::after {
+      content: "";
+      width: 80%;
+    }
+  }
+}

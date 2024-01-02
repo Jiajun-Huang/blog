@@ -1,0 +1,20 @@
+.title {
+  font-size: 4rem;
+  font-weight: 700;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 75%;
+    height: 0.1rem;
+    margin-top: 1rem;
+    // jianbian
+    color: linear-gradient(
+      to right,
+      #000 0%,
+      #000 50%,
+      #fff 50%,
+      #fff 100%
+    );
+  }
+}

@@ -1,0 +1,86 @@
+@import "../style.variable.scss";
+:root {
+  --themeColor: rgb(185, 232, 255);
+  --themeColor1: rgb(157, 222, 255);
+  --themeColor2: rgb(110, 207, 255);
+  --textColor: rgb(53, 53, 53);
+  --switchOff: rgb(179, 198, 207);
+  --tip: rgb(180, 180, 180);
+  --bodyColor: rgb(255, 255, 255);
+  --footerBg: rgba(255, 255, 255, 0.4);
+  --codeBg: rgb(50, 57, 63);
+  --textColor2: rgb(122, 122, 122);
+  --inlineCode: rgb(136, 215, 255);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --themeColor: rgb(12, 29, 27);
+    --themeColor1: rgb(22, 54, 51);
+    --themeColor2: rgb(39, 95, 89);
+    --textColor: rgb(255, 255, 255);
+    --switchOff: rgb(77, 77, 77);
+    --tip: rgb(116, 116, 116);
+    --bodyColor: rgb(0, 0, 0);
+    --footerBg: rgba(0, 0, 0, 0.3);
+    --codeBg: rgb(37, 43, 48);
+    --textColor2: rgb(167, 167, 167);
+    --inlineCode: rgb(29, 71, 67);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  color: $textColor;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: $bodyColor;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: inherit;
+}
+a:hover {
+  color: $hoverColor;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $themeColor;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto $hoverColor;
+}
