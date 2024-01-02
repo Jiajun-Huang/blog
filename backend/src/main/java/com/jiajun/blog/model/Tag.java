@@ -28,10 +28,17 @@ public class Tag {
     public Tag() {
     }
 
+    public Tag(String name) {
+        this.name = name;
+    }
+
     public Tag(Long id, String name, List<Blog> blogs) {
         this.id = id;
         this.name = name;
         this.blogs = blogs;
+    }
+
+    public Tag(Long id2, String name2) {
     }
 
     public Long getId() {

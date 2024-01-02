@@ -16,30 +16,43 @@ import org.springframework.web.util.UriUtils;
 public class FileService {
 
     // ...
-    private static final String BASE_PATH = "uploads";
+    private static final Path BASE_PATH = Paths.get(System.getProperty("user.dir"), "uploads");
 
-    public String uploadFile(MultipartFile file, String relativePath) throws IOException {
+    public String uploadFile(MultipartFile file, String relativePath) {
         // Save file to file system
-        String systemPath = System.getProperty("user.dir");
-
-        Path targetLocation = Paths.get(systemPath, BASE_PATH, relativePath, file.getOriginalFilename())
+        Path targetLocation = Paths.get(BASE_PATH.toString(), relativePath, file.getOriginalFilename())
                 .toAbsolutePath()
                 .normalize();
-        // copy file to target location
-        Files.createDirectories(targetLocation.getParent());
-        Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        // make sure the target path is under the base path
+        if (!targetLocation.startsWith(BASE_PATH)) {
+            return null;
+        }
+
+        try {
+            Files.createDirectories(targetLocation.getParent());
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            return null;
+        }
         return UriUtils.encode(Paths.get(relativePath).resolve(file.getOriginalFilename()).toString(), "UTF-8");
 
     }
 
     // ...
 
-    public Resource loadFileAsResource(Path relativePath) throws IOException {
-        String systemPath = System.getProperty("user.dir");
-        Path filePath = Paths.get(systemPath, BASE_PATH, relativePath.toString()).toAbsolutePath().normalize();
-        // load file as Resource
-        Resource resource = new ByteArrayResource(Files.readAllBytes(filePath));
-        
+    public Resource loadFileAsResource(Path relativePath) {
+
+        Path filePath = Paths.get(BASE_PATH.toString(), relativePath.toString()).toAbsolutePath().normalize();
+        // make sure the target path is under the base path
+        if (!filePath.startsWith(BASE_PATH)) {
+            return null;
+        }
+        Resource resource;
+        try {
+            resource = new ByteArrayResource(Files.readAllBytes(filePath));
+        } catch (IOException e) {
+            return null;
+        }
 
         return resource;
     }

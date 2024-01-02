@@ -26,3 +26,24 @@ export const uploadFileRequest = async (files: File[], path: string) => {
     return null; // Handle the error case appropriately
   }
 };
+
+export const downloadFileRequest = async (path: string) => {
+  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/file/download?path=${path}`;
+  var myHeaders = new Headers();
+  myHeaders.append("Connection", "keep-alive");
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  const res = await fetch(url, requestOptions);
+  if (res.ok) {
+    const data = await res.blob(); // Attempt to parse JSON only if the response is OK
+    return data;
+  } else {
+    console.error("Error:", res.status, res.statusText);
+    return null; // Handle the error case appropriately
+  }
+};

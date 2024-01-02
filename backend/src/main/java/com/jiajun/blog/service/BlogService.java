@@ -50,18 +50,11 @@ public class BlogService {
     public void deleteBlog(Long id) {
     }
 
-    // public Resource getMarkdown(Long id) {
-    // return
-    // fileService.loadFileAsResource(blogRepository.getOne(id).getMarkdown());
-    // }
+    public Blog getBlogById(Long id) {
+        return blogRepository.findById(id).orElse(null);
+    }
 
-    // public Resource getCover(Long id) {
-    // return fileService.loadFileAsResource(blogRepository.getOne(id).getCover());
-    // }
-
-    // public List<Resource> checkUriExist(String uri) {
-    // return null;
-    // }
-
-    // save blog data
+    public Blog getBlogByUri(String uri) {
+        return blogRepository.findByUri(uri);
+    }
 }

@@ -39,13 +39,18 @@ public class FileController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("path") String dir) throws IOException {
+    public ResponseEntity<Resource> downloadFile(@RequestParam("path") String dir) {
         Path path = Paths.get(dir);
         Resource resource = fileService.loadFileAsResource(path);
-        return ResponseEntity.ok().contentLength(resource.contentLength())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .header("Content-Disposition", "inline; filename=\"" + path.getFileName().toString() + "\"")
-                .body(resource);
+        try {
+            return ResponseEntity.ok().contentLength(resource.contentLength())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header("Content-Disposition", "inline; filename=\"" + path.getFileName().toString() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            // return null;
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

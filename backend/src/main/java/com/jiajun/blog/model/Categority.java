@@ -34,6 +34,10 @@ public class Categority {
     }
 
 
+    public Categority(String name2) {
+    }
+
+
     public Long getId() {
         return this.id;
     }

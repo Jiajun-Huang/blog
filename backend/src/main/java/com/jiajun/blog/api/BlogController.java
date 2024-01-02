@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jiajun.blog.model.Blog;
 import com.jiajun.blog.model.User;
 import com.jiajun.blog.service.BlogService;
+import com.jiajun.blog.service.TagService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -26,6 +27,7 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
+
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(
@@ -52,6 +54,26 @@ public class BlogController {
 
         blogService.saveBlog(blog, markdown, cover, images);
         return null;
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<Blog> getBlog(
+            @RequestParam(required = false) String uri,
+            @RequestParam(required = false) Long id) {
+
+        Blog blog = null;
+        if (uri != null) {
+            blog = blogService.getBlogByUri(uri);
+        } else if (id != null) {
+            blog = blogService.getBlogById(id);
+        }
+
+        if (blog == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(blog);
+
     }
 
     @PostMapping("/update")
