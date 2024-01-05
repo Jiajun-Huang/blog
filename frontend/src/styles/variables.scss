@@ -1,10 +1,13 @@
 $navHeight: 60px;
 $footerHeight: 120px;
 $centerWidth: 1200px;
-$asideWidth: 260px;
-$layoutWidth: 1000px;
+$asideWidth: 380px;
+$layoutWidth: 1500px;
 $topTitleHeight: 440px;
 $btnWidth: 70px;
+
+$articleCardHight: 235px;
+$articleCardHightSmall: 200px;
 
 // 圆角
 $bigRadius: 20px;
@@ -35,3 +38,7 @@ $textColor2: var(--textColor2, rgb(167, 167, 167));
 $inlineCode: var(--inlineCode, rgb(29, 71, 67));
 
 $hoverColor: var(--hoverColor, rgb(98, 164, 218));
+
+// screen
+$smallScreen: 900px;
+$smallerScreen: 768px;

@@ -1,0 +1,43 @@
+@import "../../../styles/variables.scss";
+.articleCard {
+  height: $articleCardHight;
+  margin: auto;
+  position: relative;
+  box-sizing: border-box;
+  margin: 1rem;
+  // ::shadow
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  &:hover {
+    transform: scale(1.05);
+  }
+  transition: all 0.3s ease-out;
+
+  @media screen and (max-width: $smallerScreen) {
+    height: $articleCardHightSmall;
+    font: 0.8rem;
+  }
+
+  .articleCardContainer {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 0rem 2rem;
+    .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .desc {
+      // only show 3 lines of text
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; // number of lines to show
+      -webkit-box-orient: vertical;
+    }
+
+    .meta {
+      margin-bottom: 0.6rem;
+    }
+  }
+}

@@ -10,10 +10,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+* {
+  margin: 0;
+  padding: 0;
+  color: $textColor;
+  color: inherit;
+}
 
 a {
-  font-weight: 500;
-  color: $themeColor;
   text-decoration: inherit;
 }
 a:hover {
@@ -22,10 +26,12 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
+
+  background-color: $bodyColor;
+  color: $textColor;
 }
 
 h1 {

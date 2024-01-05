@@ -1,0 +1,22 @@
+@import "styles/variables.scss";
+
+#root {
+  padding: 0;
+  text-align: center;
+  min-height: 100vh;
+
+  color: $textColor;
+}
+
+.main {
+  min-height: 100vh;
+  max-width: $layoutWidth;
+  margin: 0 auto;
+}
+
+// 900px small screen layout
+// - hide sidebar
+// 768px smaller screen layout
+// - hide sidebar
+// - hide header
+// - smaller card size
