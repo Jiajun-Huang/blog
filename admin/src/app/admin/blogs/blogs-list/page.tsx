@@ -1,6 +1,6 @@
 "use client";
 
-import { listAllBlogsRequest } from "@/request/blog";
+import { BlogControllerApi } from "@/generated-sources/openapi";
 import { Blog } from "@/type/Blog";
 import { Space, Table } from "antd";
 import Link from "next/link";
@@ -18,10 +18,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    listAllBlogsRequest().then((data: Blog[]) => {
-      data.forEach((blog) => {
-        blog.createTime = new Date(blog.createTime);
-      });
+    new BlogControllerApi().getAllBlog().then((data) => {
       console.log(data);
       setBlogs(data);
     });

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jiajun.blog.model.Blog;
-import com.jiajun.blog.model.Categority;
+import com.jiajun.blog.model.Entity.Blog;
+import com.jiajun.blog.model.Entity.Categority;
 
 public interface CategorityRepository extends JpaRepository<Categority, Long> {
     Categority findByName(String name);

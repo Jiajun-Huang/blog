@@ -1,12 +1,11 @@
-export const loginRequest = async (username: string, password: string) => {
-  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/admin/login`;
+export const loginRequestF = async (username: string, password: string) => {
+  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/user/login`;
   console.log(JSON.stringify({ username, password }));
   const request = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
-    cors: "no-cors",
-    credentials : 'include'
+    credentials: "include",
   };
   const res = await fetch(url, request);
   if (res.ok) {
@@ -19,7 +18,7 @@ export const loginRequest = async (username: string, password: string) => {
 };
 
 export const logoutRequest = async () => {
-  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/admin/logout`;
+  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/user/logout`;
   const request = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -36,7 +35,7 @@ export const logoutRequest = async () => {
 };
 
 export const checkLoginRequest = async () => {
-  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/admin/checkLogin`;
+  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/user/checkLogin`;
   const request = {
     method: "GET",
     headers: { "Content-Type": "application/json" },

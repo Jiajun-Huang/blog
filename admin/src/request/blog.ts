@@ -6,7 +6,7 @@ export const uploadBlogRequest = async (
   cover: File,
   uri: String,
   title: String,
-  tags: any,
+  tags: number[],
   createdTime: Date,
   categories: any,
   published: Boolean,

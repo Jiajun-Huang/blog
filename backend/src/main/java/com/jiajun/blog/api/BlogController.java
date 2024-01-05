@@ -1,25 +1,31 @@
 package com.jiajun.blog.api;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jiajun.blog.model.Blog;
-import com.jiajun.blog.model.User;
+import com.jiajun.blog.model.Entity.Blog;
+import com.jiajun.blog.model.Entity.User;
+import com.jiajun.blog.model.dto.BlogDto;
+import com.jiajun.blog.model.vo.BlogVo;
 import com.jiajun.blog.service.BlogService;
-import com.jiajun.blog.service.TagService;
 
+import io.swagger.annotations.ApiParam;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/blog")
@@ -28,32 +34,27 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(
-            @RequestParam MultipartFile[] images,
-            @RequestParam MultipartFile markdown,
-            @RequestParam MultipartFile cover,
-            @RequestParam String title,
-            @RequestParam String uri,
-            // @RequestParam List<Tag> tags,
-            @RequestParam Date createdTime,
-            // @RequestParam Categority categorie,
-            @RequestParam boolean published,
-            @RequestParam boolean commentable,
-            HttpSession session) throws IOException {
+    @PostMapping(value = "/upload", consumes = { "multipart/form-data" })
+    public ResponseEntity<Blog> uploadBlog(
+            @RequestPart(required = false) MultipartFile[] images,
+            @RequestPart MultipartFile markdown,
+            @RequestPart(required = false) MultipartFile cover,
+            @ApiParam() @RequestPart @Valid BlogDto blogDto,
+            HttpSession session) {
 
         User user = (User) session.getAttribute("user");
-        // if (user == null || !user.isAdmin()) {
-        // return ResponseEntity.status(403).build();
-        // }
+        System.out.println("Session ID: " + session.getId());
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            blogDto.setUser(user.getId());
+        }
+        System.out.println(blogDto);
+        System.out.println(blogDto.getUri());
 
-        Blog blog = new Blog(title, uri, null, null, null, 0, 0, commentable, published, false,
-                createdTime,
-                null, user, null, null, null);
+        blogService.uploadBlog(blogDto, markdown, cover, images, user);
 
-        blogService.saveBlog(blog, markdown, cover, images);
-        return null;
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get")
@@ -76,30 +77,44 @@ public class BlogController {
 
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<String> uploadFile() {
-        return null;
-    }
-
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteBlog() {
-        return null;
+    public ResponseEntity<String> deleteBlog(@RequestParam Long id) {
+        if (blogService.deleteBlog(id)) {
+            return ResponseEntity.ok("success");
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("list")
-    public ResponseEntity<List<Blog>> getAllBlog() {
+    public ResponseEntity<List<BlogVo>> getAllBlog() {
         List<Blog> blogs = blogService.getAllBlogObject();
-        return ResponseEntity.ok(blogs);
+        List<BlogVo> blogVos = new ArrayList<>();
+        for (Blog blog : blogs) {
+            blogVos.add(blogService.blogToBlogVo(blog));
+        }
+        return ResponseEntity.ok(blogVos);
     }
 
-    @GetMapping("content")
-    public ResponseEntity<Blog> getBlogContent() {
-        return null;
-    }
+    /**
+     * Get blog resource such as images, markdown file, cover image.
+     * 
+     * @param uri
+     * @param resourcePath
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("resource")
+    public ResponseEntity<Resource> getBlogResource(@RequestParam String uri,
+            @RequestParam String resourcePath) throws IOException {
+        Resource resource = blogService.getBlogResource(uri, resourcePath);
+        if (resource == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-    @GetMapping("cover")
-    public ResponseEntity<Blog> getBlogCover() {
-        return null;
+        return ResponseEntity.ok().contentLength(resource.contentLength())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header("Content-Disposition", "inline; filename=\"" + resourcePath + "\"")
+                .body(resource);
     }
-
 }

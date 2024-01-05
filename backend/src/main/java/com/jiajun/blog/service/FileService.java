@@ -57,4 +57,49 @@ public class FileService {
         return resource;
     }
 
+    public Resource loadFileAsResource(String relativePath) {
+
+        Path filePath = Paths.get(BASE_PATH.toString(), relativePath).toAbsolutePath().normalize();
+        // make sure the target path is under the base path
+        if (!filePath.startsWith(BASE_PATH)) {
+            return null;
+        }
+        Resource resource;
+        try {
+            resource = new ByteArrayResource(Files.readAllBytes(filePath));
+        } catch (IOException e) {
+            return null;
+        }
+
+        return resource;
+    }
+
+    public boolean deleteFile(Path relativePath) {
+        Path filePath = Paths.get(BASE_PATH.toString(), relativePath.toString()).toAbsolutePath().normalize();
+        // make sure the target path is under the base path
+        if (!filePath.startsWith(BASE_PATH)) {
+            return false;
+        }
+        try {
+            Files.delete(filePath);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteFile(String relativePath) {
+        Path filePath = Paths.get(BASE_PATH.toString(), relativePath).toAbsolutePath().normalize();
+        // make sure the target path is under the base path
+        if (!filePath.startsWith(BASE_PATH)) {
+            return false;
+        }
+        try {
+            Files.delete(filePath);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
 }

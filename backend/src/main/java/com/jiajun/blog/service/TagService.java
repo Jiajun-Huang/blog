@@ -1,12 +1,15 @@
 package com.jiajun.blog.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jiajun.blog.model.Blog;
-import com.jiajun.blog.model.Tag;
+import com.jiajun.blog.model.Entity.Blog;
+import com.jiajun.blog.model.Entity.Tag;
+import com.jiajun.blog.model.vo.TagVo;
 import com.jiajun.blog.repository.TagRepository;
 
 @Service
@@ -25,7 +28,7 @@ public class TagService {
     }
 
     public List<Tag> findAll() {
-        Iterable<Tag> tags = tagRepository.findAll();
+        List<Tag> tags = tagRepository.findAll();
         return tags;
     }
 
@@ -43,5 +46,28 @@ public class TagService {
         return tagRepository.findBlogsById(id);
     }
 
+    public List<Tag> getTagsByIds(List<Long> ids) {
+        List<Tag> tags = new ArrayList<>();
+        for (Long id : ids) {
+            Tag tag = tagRepository.findById(id).orElse(null);
+            if (tag != null) {
+                tags.add(tag);
+            }
+        }
+        return tags;
+    }
+
+    public List<TagVo> tagsToTagVos(List<Tag> tags) {
+        if (tags == null) {
+            return null;
+        }
+        List<TagVo> tagVos = new ArrayList<>();
+        for (Tag tag : tags) {
+            TagVo tagVo = new TagVo();
+            BeanUtils.copyProperties(tag, tagVo);
+            tagVos.add(tagVo);
+        }
+        return tagVos;
+    }
 
 }

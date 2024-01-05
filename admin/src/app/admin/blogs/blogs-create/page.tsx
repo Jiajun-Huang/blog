@@ -2,60 +2,62 @@
 "use client";
 
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Checkbox, DatePicker, Form, Input, Upload } from "antd";
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Form,
+  Input,
+  Select,
+  Upload,
+} from "antd";
 
 import MarkDown from "@/component/Markdown/Markdown";
-import { useEffect, useState } from "react";
-
+// import {
+//   getBlogByUriRequest,
+//   getBlogContentDownloadLink,
+//   uploadBlogRequest,
+// } from "@/request/blog";
+import { BlogDto } from "@/generated-sources/openapi";
+import {
+  BlogControllerApi,
+  UploadBlogRequest,
+} from "@/generated-sources/openapi/apis/BlogControllerApi";
 import {
   getBlogByUriRequest,
   getBlogContentDownloadLink,
-  uploadBlogRequest,
 } from "@/request/blog";
 import { Blog } from "@/type/Blog";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const onSubmit = async (values: any) => {
-  console.log(values);
+  const blog_api = new BlogControllerApi();
 
-  const images: File[] = values?.files?.fileList.map(
+  const blogDto: BlogDto = {
+    title: values.title,
+    uri: values.uri,
+    createTime: values.createTime,
+    published: values.published,
+    commentable: values.commentable,
+  };
+
+  const markdown = new Blob([values.content]);
+  const files: Blob[] = values.files.fileList.map(
     (file: any) => file.originFileObj
   );
-  const markdown: File = new File([text], "markdown.md");
-  const cover: File = images[0];
-  const title: String = values["title"];
-  const uri: String = values["uri"];
-  const tags: any = [];
-  const createTime: any = values["createTime"].toDate();
-  const categories: any = undefined;
-  const published: Boolean = values["published"];
-  const commentable: Boolean = values["commentable"];
-
-  console.log({
-    images,
-    markdown,
-    cover,
-    title,
-    uri,
-    tags,
-    createTime,
-    categories,
-    published,
-    commentable,
+  const request: UploadBlogRequest = {
+    blogDto: blogDto,
+    markdown: markdown,
+    images: files,
+    cover: files[0],
+  };
+  console.log(files[0]);
+  console.log(request);
+  blog_api.uploadBlog(request).then((data) => {
+    console.log(data);
   });
-  await uploadBlogRequest(
-    images,
-    markdown,
-    cover,
-    uri,
-    title,
-    tags,
-    createTime,
-    categories,
-    published,
-    commentable
-  );
 };
 export default function Page() {
   const [text, setText] = useState("");
@@ -124,6 +126,11 @@ export default function Page() {
       </Form.Item>
       <Form.Item label="Crate Time" name="createTime">
         <DatePicker />
+      </Form.Item>
+      <Form.Item label="Cate" name="categoriy">
+        <Select
+          
+        />
       </Form.Item>
       <Form.Item label="Publish" name="published" valuePropName="checked">
         <Checkbox />

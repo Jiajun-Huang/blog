@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jiajun.blog.model.Blog;
-import com.jiajun.blog.model.Tag;
+import com.jiajun.blog.model.Entity.Tag;
+import com.jiajun.blog.model.vo.BlogVo;
+import com.jiajun.blog.model.vo.TagVo;
+import com.jiajun.blog.service.BlogService;
 import com.jiajun.blog.service.TagService;
 
 @RestController
@@ -21,9 +23,15 @@ public class TagController {
     @Autowired
     TagService tagService;
 
+    @Autowired
+    BlogService blogService;
+
     @PostMapping("/upload")
     public ResponseEntity<String> save(@RequestParam String name) {
         Tag tag = new Tag(name);
+        if (tagService.findByName(name) != null) {
+            return ResponseEntity.badRequest().body("tag already exists");
+        }
         tagService.saveTag(tag);
         return ResponseEntity.ok("success");
     }
@@ -35,13 +43,13 @@ public class TagController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Tag>> list() {
-        return ResponseEntity.ok(tagService.findAll());
+    public ResponseEntity<List<TagVo>> list() {
+        return ResponseEntity.ok(tagService.tagsToTagVos(tagService.findAll()));
     }
 
     @GetMapping("/listblogs")
-    public ResponseEntity<List<Blog>> listBlogs(@RequestParam Long id) {
-        return ResponseEntity.ok(tagService.findBlogsById(id));
+    public ResponseEntity<List<BlogVo>> listBlogs(@RequestParam Long id) {
+        return ResponseEntity.ok(blogService.blogsToBlogVos(tagService.findBlogsById(id)));
     }
 
 }
