@@ -6,7 +6,6 @@ import { Navbar } from "./components/navbar/navbar";
 
 import style from "./App.module.scss";
 import { setTheme, theme } from "./util/theme/theme";
-import { MyLayout } from "./components/anti/Layout/MyLayout";
 // the root layout of the app
 function App() {
   // const [count, setCount] = useState(0);
@@ -15,11 +14,11 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-        <main className={style.main}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </main>
+      <main className={style.main}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </main>
       <MyFooter />
     </BrowserRouter>
   );

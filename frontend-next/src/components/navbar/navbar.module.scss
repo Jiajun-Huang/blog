@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "../../style.variable.scss";
 
 .navbar {
   display: flex;
@@ -22,10 +22,12 @@
 
   .navItem {
     position: relative;
-    display: inline-block; /* Ensures inline behavior */
+    text-align: center;
     padding-right: 1rem;
-    font-size: 1.1rem;
-    cursor: pointer; /* Add pointer cursor for better UX */
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex; /* Use flexbox to vertically center */
+    align-items: center; /* Vertically center the text */
 
     &:hover {
       color: $hoverColor;
@@ -34,14 +36,14 @@
     &::after {
       content: "";
       display: block;
-      width: 0%; /* Adjust the line width as needed */
-      height: 2px; /* Adjust the line thickness as needed */
-      background-color: $hoverColor; /* Adjust the line color as needed */
+      width: 0%;
+      height: 2px;
+      background-color: $hoverColor;
       position: absolute;
-      top: 55%;
+      top: 75%;
       left: 0%;
       transform: translateY(-50%);
-      opacity: 1; /* Initially hidden */
+      opacity: 1;
       transition: width 0.5s ease-in-out;
       transform-origin: left center;
     }

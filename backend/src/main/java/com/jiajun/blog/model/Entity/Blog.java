@@ -53,7 +53,6 @@ public class Blog {
     @ManyToOne
     private Categority categority;
 
-    @JsonBackReference
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
 
