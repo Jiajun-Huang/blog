@@ -1,7 +1,6 @@
-import Image from "next/image";
 import style from "./mdImage.module.scss";
 
-const MdmImage = (props) => {
+const MdmImage = (props: any) => {
   // console.log(props, "props");
   return (
     <div className={style.mdImage}>

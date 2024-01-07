@@ -1,35 +1,21 @@
-.PHONY: build-development
-build-development: ## Build the development docker image.
-	docker compose -f docker/development/docker-compose.yml build
+.PHONY: backend
+backend:
+	mvn -f .\backend\pom.xml compile && mvn -f .\backend\pom.xml spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
+.PHONY: backend-build
+backend-build:
+	mvn -f .\backend\pom.xml clean -Dmaven.test.skip=true
 
-.PHONY: start-development
-start-development: ## Start the development docker container.
-	docker compose -f docker/development/docker-compose.yml up -d
+.PHONY: frontend
+frontend:
+	npm --prefix .\frontend run dev
 
-.PHONY: stop-development
-stop-development: ## Stop the development docker container.
-	docker compose -f docker/development/docker-compose.yml down
+.PHONY: frontend-build
+frontend-build:
+	npm --prefix .\frontend run build
 
-.PHONY: build-staging
-build-staging: ## Build the staging docker image.
-	docker compose -f docker/staging/docker-compose.yml build
+.PHONY: docker-build
+docker-build:
+	docker-compose up --build -d
 
-.PHONY: start-staging
-start-staging: ## Start the staging docker container.
-	docker compose -f docker/staging/docker-compose.yml up -d
 
-.PHONY: stop-staging
-stop-staging: ## Stop the staging docker container.
-	docker compose -f docker/staging/docker-compose.yml down
-  
-.PHONY: build-production
-build-production: ## Build the production docker image.
-	docker compose -f docker/production/docker-compose.yml build
-
-.PHONY: start-production
-start-production: ## Start the production docker container.
-	docker compose -f docker/production/docker-compose.yml up -d
-
-.PHONY: stop-production
-stop-production: ## Stop the production docker container.
-	docker compose -f docker/production/docker-compose.yml down
+	

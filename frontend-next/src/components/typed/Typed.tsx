@@ -3,7 +3,11 @@
 import React from "react";
 import Typed from "typed.js";
 
-export const Type = ({ sentences }) => {
+interface TypeProps {
+  sentences: string[];
+}
+
+export const Type = ({ sentences }: TypeProps) => {
   const el = React.useRef(null);
 
   React.useEffect(() => {

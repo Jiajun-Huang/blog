@@ -1,7 +1,11 @@
 import { theme } from "antd";
 import Layout from "antd/es/layout/layout";
 
-export const MyLayout = ({ children }) => {
+interface MyLayoutProps {
+  children: React.ReactNode;
+}
+
+export const MyLayout = ({ children }: MyLayoutProps) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();

@@ -1,5 +1,5 @@
+import style from "@/components/sidebar/sidebar.module.scss";
 import { PersonalCard } from "../card/personalCard/personalCard";
-import style from "./sideBar.module.scss";
 
 export const Sidebar = () => {
   return (

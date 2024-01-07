@@ -1,5 +1,5 @@
 import { BlogControllerApi } from "@/api/openapi/apis/BlogControllerApi";
-import { ArticleCardProps } from "@/components/card/articleCard/ArticleCard";
+import { ArticleCardProps } from "@/components/card/articleCard/articleCard";
 import { ArticleCardList } from "@/components/card/articleCard/articleCardList";
 
 export default async function Page() {

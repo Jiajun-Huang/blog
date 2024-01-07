@@ -2,6 +2,7 @@
 
 const nextConfig = {
   reactStrictMode: true,
+  output: "standalone",
   // pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   //   i18n,
   // sassOptions: {
@@ -21,3 +22,5 @@ const nextConfig = {
     ],
   },
 };
+
+module.exports = nextConfig;

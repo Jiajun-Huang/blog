@@ -8,8 +8,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  mvc:
-    dispatch-trace-request: false
 logging:
   level:
     root: info

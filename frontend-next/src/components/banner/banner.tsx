@@ -10,7 +10,7 @@ export const Banner = () => {
   return (
     <div className={style.banner}>
       <div className={style.title}>
-        <h1>Jiajun's Website asdfas df</h1>
+        <h1>Jiajun&apos;s Website</h1>
       </div>
       <div className={style.subtitle}>
         <Type sentences={sentences} />

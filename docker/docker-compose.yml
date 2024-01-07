@@ -1,8 +1,24 @@
-version: '3'
+version: "3"
+
 services:
-  nextjs:
-    build: ./
   nginx:
-    build: ./nginx
+    build:
+      context: ../nginx
+      dockerfile: ../docker/Dockerfile-nginx
     ports:
       - 80:80
+
+  springboot:
+    image: springboot
+    build:
+      context: ../backend/target
+      dockerfile: ../../docker/Dockerfile-backend
+    restart: always
+
+  nextjs:
+    image: nextjs
+    build:
+      context: ../frontend-next
+      dockerfile: ../docker/Dockerfile-frontend
+    depends_on:
+      - springboot

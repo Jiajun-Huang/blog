@@ -7,7 +7,13 @@ import ImageUrl from "@/util/imageurl";
 import style from "./page.module.scss";
 export const revalidate = 0;
 
-async function Page({ params }) {
+interface PageProps {
+  params: {
+    uri: string;
+  };
+}
+
+async function Page({ params }: PageProps) {
   const article = await getArticleData(params.uri);
   const path = article.contentPath;
   const urlTransform = ImageUrl.bind(null, params.uri);
@@ -25,13 +31,16 @@ async function Page({ params }) {
   );
 }
 
-async function getArticleData(uri) {
+async function getArticleData(uri: string | undefined) {
   const controller = new BlogControllerApi();
   const res = await controller.getBlog({ uri: uri });
   return res;
 }
 
-async function getArticleContent(path) {
+async function getArticleContent(path: string | undefined) {
+  if (path === undefined) {
+    return "";
+  }
   const controller = new FileControllerApi();
   const res = await controller.downloadFile({ path: path });
 

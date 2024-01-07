@@ -8,6 +8,11 @@ import remarkMath from "remark-math";
 import MdCode from "./components/code/MdCode";
 import "./markdown.style.scss";
 
+interface Props {
+  children: string;
+  urlTransform?: (url: string) => string;
+}
+
 const MarkDown = ({ children, urlTransform, ...otherProps }: Props) => {
   if (!children) {
     return <div className="Markdown"></div>;
