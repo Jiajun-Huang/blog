@@ -1,19 +1,12 @@
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeSlug from "rehype-slug";
 // plugin
+import "katex/dist/katex.min.css";
 import ReactMarkdown from "react-markdown";
-import { CodeProps } from "react-markdown/lib/ast-to-react";
-import rehypeMathjax from "rehype-mathjax";
-import rehypeRaw from "rehype-raw";
+import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import MdCode from "./components/code/MdCode";
 import "./markdown.style.scss";
-
-interface Props {
-  children: string | undefined;
-  urlTransform?: (url: string) => string;
-}
 
 const MarkDown = ({ children, urlTransform, ...otherProps }: Props) => {
   if (!children) {
@@ -23,34 +16,13 @@ const MarkDown = ({ children, urlTransform, ...otherProps }: Props) => {
   return (
     <div className="Markdown" {...otherProps}>
       <ReactMarkdown
-        remarkPlugins={[remarkMath, [remarkGfm, { singleTilde: false }]]}
-        rehypePlugins={[rehypeMathjax, rehypeRaw, rehypeSlug]}
+        remarkPlugins={[remarkMath, remarkGfm]}
+        rehypePlugins={[rehypeKatex, rehypeSlug]}
         urlTransform={urlTransform}
         components={{
-          code({
-            node,
-            inline,
-            className,
-            children,
-            style,
-            ...props
-          }: CodeProps) {
-            const match = /language-(\w+)/.exec(className || "");
-            return !inline && match ? (
-              <SyntaxHighlighter
-                style={oneDark} // Spread the oneDark object inside another object
-                language={match[1]}
-                PreTag="div"
-                {...props}
-              >
-                {String(children).replace(/\n$/, "")}
-              </SyntaxHighlighter>
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            );
-          },
+          code: MdCode as any,
+          // image: MdImage as any,
+          // img: MdImage as any,
         }}
       >
         {children}

@@ -1,7 +1,10 @@
 import { BlogControllerApi, FileControllerApi } from "@/api/openapi";
 import Markdown from "@/components/Markdown/Markdown";
+import { BaseCard } from "@/components/card/baseCard";
+import { Sidebar } from "@/components/sidebar/sidebar";
+import { ContentAndSidebar } from "@/layout/contentAndSidebar";
 import ImageUrl from "@/util/imageurl";
-
+import style from "./page.module.scss";
 export const revalidate = 0;
 
 async function Page({ params }) {
@@ -9,14 +12,16 @@ async function Page({ params }) {
   const path = article.contentPath;
   const urlTransform = ImageUrl.bind(null, params.uri);
 
-  console.log(urlTransform("test"));
-
   return (
-    <div>
-      <Markdown urlTransform={urlTransform}>
-        {await getArticleContent(path)}
-      </Markdown>
-    </div>
+    <ContentAndSidebar>
+      <BaseCard hover={false}>
+        <h1 className={style.title}>{article.title}</h1>
+        <Markdown urlTransform={urlTransform}>
+          {await getArticleContent(path)}
+        </Markdown>
+      </BaseCard>
+      <Sidebar />
+    </ContentAndSidebar>
   );
 }
 

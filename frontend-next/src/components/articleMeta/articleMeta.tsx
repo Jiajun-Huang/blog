@@ -43,7 +43,9 @@ export const ArticleMeta = ({
         <span className={style.articleIcon}>
           <FolderOpenFilled />
         </span>
-        <Link href={categoryRoute + category}>{category}</Link>
+        <object>
+          <Link href={categoryRoute + category}>{category}</Link>
+        </object>
       </span>
       <span className={style.articleMataItem}>
         <span className={style.articleIcon}>
@@ -51,7 +53,9 @@ export const ArticleMeta = ({
         </span>
         {tags.map((tag, i) => (
           <span key={i} className={style.tags}>
-            <Link href={tagRoute + tag}>{tag}</Link>
+            <object>
+              <Link href={tagRoute + tag}>{tag}</Link>
+            </object>
           </span>
         ))}
       </span>

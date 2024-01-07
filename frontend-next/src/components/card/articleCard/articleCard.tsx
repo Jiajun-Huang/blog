@@ -24,7 +24,6 @@ export const ArticleCard = ({
   desc,
   uri,
 }: ArticleCardProps) => {
-  console.log(articleRoute + uri);
   return (
     <Link href={articleRoute + uri}>
       <BaseCard className={style.articleCard} hover>

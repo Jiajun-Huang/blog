@@ -1,6 +1,6 @@
 import style from "./banner.module.scss";
 
-import { Type } from "@/components/typed/typed";
+import { Type } from "@/components/typed/Typed";
 
 import { DownOutlined } from "@ant-design/icons";
 

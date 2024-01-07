@@ -1,5 +1,5 @@
 import React from "react";
-import { ArticleCard, ArticleCardProps } from "./ArticleCard";
+import { ArticleCard, ArticleCardProps } from "./articleCard";
 import style from "./articleCard.module.scss";
 
 interface ArticleCardListProps {
