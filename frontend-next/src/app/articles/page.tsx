@@ -2,6 +2,8 @@ import { BlogControllerApi } from "@/api/openapi/apis/BlogControllerApi";
 import { ArticleCardProps } from "@/components/card/articleCard/articleCard";
 import { ArticleCardList } from "@/components/card/articleCard/articleCardList";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const articles = await getArticleList();
   return (

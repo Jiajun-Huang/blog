@@ -38,7 +38,6 @@ public class FileService {
 
     }
 
-    // ...
 
     public Resource loadFileAsResource(Path relativePath) {
 

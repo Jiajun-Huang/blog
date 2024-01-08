@@ -11,9 +11,11 @@ services:
   springboot:
     image: springboot
     build:
-      context: ../backend/target
-      dockerfile: ../../docker/Dockerfile-backend
+      context: ../backend
+      dockerfile: ../docker/Dockerfile-backend
     restart: always
+    ports:
+      - 8080:8080
 
   nextjs:
     image: nextjs

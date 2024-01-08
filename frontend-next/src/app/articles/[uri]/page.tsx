@@ -5,7 +5,8 @@ import { Sidebar } from "@/components/sidebar/sidebar";
 import { ContentAndSidebar } from "@/layout/contentAndSidebar";
 import ImageUrl from "@/util/imageurl";
 import style from "./page.module.scss";
-export const revalidate = 0;
+
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: {
@@ -33,18 +34,30 @@ async function Page({ params }: PageProps) {
 
 async function getArticleData(uri: string | undefined) {
   const controller = new BlogControllerApi();
-  const res = await controller.getBlog({ uri: uri });
-  return res;
+  try {
+    const res = await controller.getBlog({ uri: uri });
+    return res;
+  } catch (e) {
+    console.log(e);
+    return {
+      title: "",
+      contentPath: "",
+    };
+  }
 }
 
 async function getArticleContent(path: string | undefined) {
   if (path === undefined) {
     return "";
   }
-  const controller = new FileControllerApi();
-  const res = await controller.downloadFile({ path: path });
-
-  return res.text();
+  try {
+    const controller = new FileControllerApi();
+    const res = await controller.downloadFile({ path: path });
+    return res.text();
+  } catch (e) {
+    console.log(e);
+    return "";
+  }
 }
 
 export default Page;

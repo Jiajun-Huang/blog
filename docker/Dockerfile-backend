@@ -10,13 +10,16 @@ EXPOSE 8080
 # Define a volume (if needed)
 VOLUME /tmp
 
+WORKDIR /app
 # Set the timezone
 ENV TZ=America/Vancouver
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Add your application JAR file
-ADD blog-0.0.1-SNAPSHOT.jar app.jar
+ADD target/blog-0.0.1-SNAPSHOT.jar app.jar
 
+# copu the upload folder to /app in the container
+COPY /uploads uploads
 # Run commands to set up the application
 RUN bash -c 'touch /app.jar'
 

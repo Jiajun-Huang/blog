@@ -1,5 +1,7 @@
 import { CategorityControllerApi } from "@/api/openapi";
 
+export const dynamic = "force-dynamic";
+
 const Page = async () => {
   const categorities = await getcategorities();
   return <div>{JSON.stringify(categorities)}</div>;

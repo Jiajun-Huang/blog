@@ -6,6 +6,8 @@ import { Sidebar } from "@/components/sidebar/sidebar";
 import { ContentAndSidebar } from "@/layout/contentAndSidebar";
 import styles from "./page.module.scss";
 
+export const dynamic = 
+
 export default async function Home() {
   const articles = await getArticleList();
 

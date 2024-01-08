@@ -1,5 +1,9 @@
 import { TagControllerApi } from "@/api/openapi";
 
+// uncache 
+
+export const dynamic = "force-dynamic";
+
 const Page = async () => {
   const tags = await getTags();
   return <div>{JSON.stringify(tags)}</div>;
