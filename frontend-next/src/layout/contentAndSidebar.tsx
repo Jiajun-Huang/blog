@@ -1,4 +1,4 @@
-import style from "./contentAndSideBar.module.scss";
+import style from "./contentAndSidebar.module.scss";
 
 type ContentAndSidebarProps = {
   children: React.ReactNode[];

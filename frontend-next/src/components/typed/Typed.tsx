@@ -22,7 +22,7 @@ export const Type = ({ sentences }: TypeProps) => {
       // Destroy Typed instance during cleanup to stop animation
       typed.destroy();
     };
-  }, []);
+  }, [sentences]);
 
   return (
     <div className="App">

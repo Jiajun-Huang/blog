@@ -6,10 +6,15 @@ import { Sidebar } from "@/components/sidebar/sidebar";
 import { ContentAndSidebar } from "@/layout/contentAndSidebar";
 import styles from "./page.module.scss";
 
-export const dynamic = 
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const articles = await getArticleList();
+  let articles: ArticleCardProps[] = [];
+  try {
+    articles = await getArticleList();
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <>

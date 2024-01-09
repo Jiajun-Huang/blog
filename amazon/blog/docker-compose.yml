@@ -26,7 +26,6 @@ services:
       dockerfile: ../docker/Dockerfile-frontend
     depends_on:
       - springboot
-      
   mysql:
     image: "mysql:latest"
     ports:
@@ -39,7 +38,6 @@ services:
     secrets:
       - db_password
       - db_root_password
-
   minio:
     image: "bitnami/minio:latest"
     ports:
