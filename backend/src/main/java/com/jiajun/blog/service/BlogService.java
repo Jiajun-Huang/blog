@@ -48,9 +48,10 @@ public class BlogService {
         fileService.uploadFile(cover, blog.getUri()); // upload cover
 
         String contentPath = blog.getUri() + "/" + markdown.getOriginalFilename();
-        String coverPath = blog.getUri() + "/" + cover.getOriginalFilename();
+        String coverPath = cover != null ? blog.getUri() + "/" + cover.getOriginalFilename() : null;
         blog.setContentPath(contentPath);
         blog.setCoverPath(coverPath);
+
         blogRepository.save(blog);
 
         if (images == null) {
@@ -115,9 +116,13 @@ public class BlogService {
         blog.setDeleted(false);
         blog.setCreateTime(blogDto.getCreateTime());
         blog.setUpdateTime(blogDto.getUpdateTime());
-        blog.setUser(userService.getUserById(blogDto.getUser()));
-        blog.setCategority(categorityService.findById(blogDto.getCategorie()));
-        blog.setTags(tagService.getTagsByIds(blogDto.getTags()));
+
+        if (blogDto.getUser() != null)
+            blog.setUser(userService.getUserById(blogDto.getUser()));
+        if (blogDto.getCategorie() != null)
+            blog.setCategority(categorityService.findById(blogDto.getCategorie()));
+        if (blogDto.getTags() != null)
+            blog.setTags(tagService.getTagsByIds(blogDto.getTags()));
 
         // blog.setComments(null);
         return blog;
@@ -138,10 +143,13 @@ public class BlogService {
         blogVo.setCreateTime(blog.getCreateTime());
         blogVo.setUpdateTime(blog.getUpdateTime());
 
-        blogVo.setUser(userService.userToUserVo(blog.getUser()));
+        if (blog.getUser() != null)
+            blogVo.setUser(userService.userToUserVo(blog.getUser()));
+        if (blog.getCategority() != null)
+            blogVo.setCategorie(categorityService.categorityToCategorityVo(blog.getCategority()));
+        if (blog.getTags() != null)
+            blogVo.setTags(tagService.tagsToTagVos(blog.getTags())); // Change this line
 
-        blogVo.setCategorie(categorityService.categorityToCategorityVo(blog.getCategority()));
-        blogVo.setTags(tagService.tagsToTagVos(blog.getTags()));
         return blogVo;
     }
 
@@ -158,16 +166,22 @@ public class BlogService {
 
         String uri = blogDto.getUri();
         if (blogRepository.findByUri(uri) != null) {
-            return false;
+            // overwrite
+            Blog blog = blogRepository.findByUri(uri);
+            
         }
 
-        String coverPath = uri + "/" + cover.getOriginalFilename();
+        String coverPath = cover == null ? null : uri + "/" + cover.getOriginalFilename();
         String contentPath = uri + "/" + markdown.getOriginalFilename();
 
         Blog blog = blogDtoToBlog(blogDto, coverPath, contentPath);
         saveBlog(blog, markdown, cover, images);
         return true;
 
+    }
+
+    public List<BlogVo> findBlogsByCategorityId(Long id) {
+        return null;
     }
 
 }
