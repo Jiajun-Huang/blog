@@ -3,6 +3,8 @@ import rehypeSlug from "rehype-slug";
 import "katex/dist/katex.min.css";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
+import codeTitle from "remark-code-title";
+import collapse from "remark-collapse";  
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import MdCode from "./components/code/MdCode";
@@ -21,7 +23,7 @@ const MarkDown = ({ children, urlTransform, ...otherProps }: Props) => {
   return (
     <div className="Markdown" {...otherProps}>
       <ReactMarkdown
-        remarkPlugins={[remarkMath, remarkGfm]}
+        remarkPlugins={[remarkMath, remarkGfm, collapse, codeTitle]}
         rehypePlugins={[rehypeKatex, rehypeSlug]}
         urlTransform={urlTransform}
         components={{
