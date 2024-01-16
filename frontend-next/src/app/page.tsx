@@ -1,4 +1,4 @@
-import { BlogControllerApi } from "@/api/openapi";
+import { listBlogs } from "@/api/Request";
 import { Banner } from "@/components/banner/banner";
 import { ArticleCardProps } from "@/components/card/articleCard/articleCard";
 import { ArticleCardList } from "@/components/card/articleCard/articleCardList";
@@ -32,8 +32,7 @@ export default async function Home() {
 }
 
 const getArticleList = async () => {
-  const controller = new BlogControllerApi();
-  const res = await controller.getAllBlog();
+  const res = await listBlogs();
   const articles: ArticleCardProps[] = res.map((item) => {
     const article: ArticleCardProps = {
       title: item.title ? item.title : "",

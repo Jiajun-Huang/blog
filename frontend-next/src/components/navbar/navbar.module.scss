@@ -1,4 +1,4 @@
-@import "../../style.variable.scss";
+@import "../../styles/variables.scss";
 
 .navbar {
   display: flex;
@@ -6,6 +6,7 @@
   justify-content: space-between;
   height: $navHeight;
   padding: 0.4rem 1rem;
+  margin-bottom: 2rem;
 
   .leftItems {
     display: flex;

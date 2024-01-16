@@ -7,7 +7,7 @@ backend-build:
 
 .PHONY: frontend
 frontend:
-	npm --prefix ./frontend-next run dev
+	npm --prefix frontend-next run dev
 
 .PHONY: frontend-build
 frontend-build:

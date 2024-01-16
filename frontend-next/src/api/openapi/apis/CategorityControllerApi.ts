@@ -25,15 +25,15 @@ import {
     CategorityVoToJSON,
 } from '../models/index';
 
-export interface Delete1Request {
-    id: number;
+export interface CreateCategoryRequest {
+    name: string;
 }
 
-export interface ListBlogs1Request {
-    id: number;
+export interface DeleteCategoryByNameRequest {
+    name: string;
 }
 
-export interface Save1Request {
+export interface ListBlogsWithCategoryRequest {
     name: string;
 }
 
@@ -44,101 +44,9 @@ export class CategorityControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async delete1Raw(requestParameters: Delete1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling delete1.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.id !== undefined) {
-            queryParameters['id'] = requestParameters.id;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/categority/delete`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<string>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
-    }
-
-    /**
-     */
-    async delete1(requestParameters: Delete1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.delete1Raw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     */
-    async list1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CategorityVo>>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/categority/list`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CategorityVoFromJSON));
-    }
-
-    /**
-     */
-    async list1(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CategorityVo>> {
-        const response = await this.list1Raw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     */
-    async listBlogs1Raw(requestParameters: ListBlogs1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BlogVo>>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listBlogs1.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.id !== undefined) {
-            queryParameters['id'] = requestParameters.id;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/categority/listblogs`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(BlogVoFromJSON));
-    }
-
-    /**
-     */
-    async listBlogs1(requestParameters: ListBlogs1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BlogVo>> {
-        const response = await this.listBlogs1Raw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     */
-    async save1Raw(requestParameters: Save1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async createCategoryRaw(requestParameters: CreateCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling save1.');
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling createCategory.');
         }
 
         const queryParameters: any = {};
@@ -165,8 +73,100 @@ export class CategorityControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async save1(requestParameters: Save1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.save1Raw(requestParameters, initOverrides);
+    async createCategory(requestParameters: CreateCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.createCategoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async deleteCategoryByNameRaw(requestParameters: DeleteCategoryByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling deleteCategoryByName.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/categority/delete`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     */
+    async deleteCategoryByName(requestParameters: DeleteCategoryByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.deleteCategoryByNameRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async listBlogsWithCategoryRaw(requestParameters: ListBlogsWithCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BlogVo>>> {
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling listBlogsWithCategory.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/categority/listblogs`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(BlogVoFromJSON));
+    }
+
+    /**
+     */
+    async listBlogsWithCategory(requestParameters: ListBlogsWithCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BlogVo>> {
+        const response = await this.listBlogsWithCategoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async listCategoryRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CategorityVo>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/categority/list`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CategorityVoFromJSON));
+    }
+
+    /**
+     */
+    async listCategory(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CategorityVo>> {
+        const response = await this.listCategoryRaw(initOverrides);
         return await response.value();
     }
 

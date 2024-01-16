@@ -1,4 +1,4 @@
-@import "../style.variable.scss";
+@import "../styles/variables.scss";
 
 .mainContainer {
   display: flex;
@@ -15,7 +15,6 @@
     padding: 1em;
   }
 }
-
 
 .main {
   min-height: 100vh;

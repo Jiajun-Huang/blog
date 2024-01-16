@@ -64,12 +64,9 @@ public class CategorityController {
         if (categority == null) {
             return ResponseEntity.badRequest().body(null);
         }
-        List<BlogVo> blogVos = new ArrayList<>();
+
         List<BlogVo> blogs = blogService.findBlogsByCategorityId(categority.getId());
-        for (BlogVo blog : blogs) {
-            blogVos.add(blogService.blogToBlogVo(blog));
-        }
-        return ResponseEntity.ok(blogVos);
+        return ResponseEntity.ok(blogs);
     }
 
 }

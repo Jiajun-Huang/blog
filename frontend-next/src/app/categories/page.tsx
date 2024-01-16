@@ -1,4 +1,4 @@
-import { CategorityControllerApi } from "@/api/openapi";
+import { listCategories } from "@/api/Request";
 
 export const dynamic = "force-dynamic";
 
@@ -8,9 +8,7 @@ const Page = async () => {
 };
 
 const getcategorities = async () => {
-  const controller = new CategorityControllerApi();
-  const res = await controller.list1();
-  return res;
+  return await listCategories();
 };
 
 export default Page;
