@@ -2,11 +2,11 @@ version: "3"
 
 services:
   nginx:
-    image: jiajunhuang430/nginx
+    image: nginx
     ports:
       - 80:80
   springboot:
-    image: jiajunhuang430/springboot
+    image: springboot
     restart: always
     ports:
       - 8080:8080
@@ -14,7 +14,7 @@ services:
       - mysql
       
   nextjs:
-    image: jiajunhuang430/nextjs
+    image: nextjs
     depends_on:
       - springboot
     
@@ -30,6 +30,8 @@ services:
     secrets:
       - db_password
       - db_root_password
+    volumes:
+      - ./mysql:/var/lib/mysql
 
   # minio:
   #   image: "bitnami/minio:latest"
