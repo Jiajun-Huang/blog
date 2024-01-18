@@ -1,9 +1,10 @@
 .PHONY: backend
 backend:
-	mvn -f ./backend/pom.xml compile && mvn -f ./backend/pom.xml spring-boot:run
+	mvn -f ./backend/pom.xml compile && mvn -f ./backend/pom.xml spring-boot:run -Dspring.profiles.active=dev
+
 .PHONY: backend-build
 backend-build:
-	mvn -f ./backend/pom.xml clean -Dmaven.test.skip=true
+	mvn -f ./backend/pom.xml clean -Dmaven.test.skip=true package
 
 .PHONY: frontend
 frontend:
@@ -18,8 +19,14 @@ admin:
 	npm --prefix ./admin run dev
 
 .PHONY: docker-build
-docker-build:
-	docker-compose up --build -d
+docker-build: backend-build
 
+	docker compose -f ./docker/docker-compose.yml build springboot
+	docker compose -f ./docker/docker-compose.yml up -d mysql
+	docker compose -f ./docker/docker-compose.yml up -d springboot
+	docker compose -f ./docker/docker-compose.yml build
+	docker compose -f ./docker/docker-compose.yml down
 
-	
+.PHONY: docker-up
+docker-up:
+	docker-compose up -d

@@ -10,10 +10,12 @@
 
 ## Tech stack
 
-Springboot is used for backend, and use JPA to manipulate to Mysql database.  
-Swagger generate Openapi documentation based on Java api definition (benefit of strong type language). And use the [openapi-cli](https://openapi-generator.tech/) to generate frontend requst code.  
-Nextjs is used for frontend and admin page.  
-Negix is used as proxy for serving the frontend.  
+Springboot is used for backend, and use JPA to manipulate to Mysql database.
+Swagger generate Openapi documentation based on Java api definition (benefit of strong type language). And use the [openapi-cli](https://openapi-generator.tech/) to generate frontend requst code.
+~~Nextjs is used for frontend and admin page.~~
+Nextjs is used for frontend. Admin page is build with React with Vite
+
+Negix is used as proxy for serving the frontend.
 Docker is used for deplaying the services, where each frontend, backend, database and negix will be different contain and linked with docker-compose.
 
 ## Initial design specification
@@ -76,12 +78,9 @@ Docker is used for deplaying the services, where each frontend, backend, databas
 - Display site visit on the home page sidebar
 - Display all tag and categoies on home page sidebar
 - Finish the about page
-- Better color for the website theme
-- Change avatar
 
 ### Admin page
 
-- Reactor the proeject. I was using nextjs in the wrong way
 - Add a page to edit a existing blog
 - Style the add blog page
 - Add pages to manage tags and categries
