@@ -2,6 +2,17 @@
 
 > This proeject is not completed, I only spend less than two weeks so far with learning nextjs, springboot, negix, docker on the fly
 
+## How to start this project
+
+1. Have docker on your machine
+2. Go to `backend\src\main\resources\` create a new file called `application-pro.yml`
+3. Copy everything in `application-dev.yml` and change the setting about `SQL` in your `application-pro.yml`
+4. Go to `docker\` create a folder called `secrets`, create `db_password.txt` and `db_root_password.txt` and add your password in it. The password needs to match what you set in `application-pro.yml`
+5. Go to `frontend-next\src\api\openapi\runtime.ts`, change the `BASE_PATH` to `BASE_PATH="http://springboot:8080"`
+6. Go back to the proejct root directory. On your terminal, run `make docker-build` after it success then run `make docker-up`
+
+After these steps, I hope the project running on `localhost:80`. Since I have add the admin to the docker-compose, you need to start admin project using `npm --prefix .\admin run dev` or modify the sql database and `backend\uploads\` manually
+
 ## Why I build this project
 
 - I learned a lot in University, and definitly face with a lot of problem. In order to retain what I learned, and how I solve problems, I decided to note everything done, and I think it is pretty cool to shared those with others.
