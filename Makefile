@@ -1,10 +1,10 @@
 .PHONY: backend
 backend:
-	mvn -f ./backend/pom.xml compile && mvn -f ./backend/pom.xml spring-boot:run -Dspring.profiles.active=dev
+	mvn -f ./backend/pom.xml compile && mvn -f ./backend/pom.xml spring-boot:run -Dspring-boot.run.profiles=dev
 
 .PHONY: backend-build
 backend-build:
-	mvn -f ./backend/pom.xml clean -Dmaven.test.skip=true package
+	mvn -f ./backend/pom.xml clean -Dmaven.test.skip=true -Dspring-boot.run.profiles=pro package
 
 .PHONY: frontend
 frontend:
