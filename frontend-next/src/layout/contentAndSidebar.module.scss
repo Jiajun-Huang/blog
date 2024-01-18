@@ -1,10 +1,12 @@
+@import "../styles/variables.scss";
+
 .contentAndSidebar {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin: auto;
   box-sizing: border-box;
-
+  max-width: $layoutWidth;
   .sidebar {
     width: 25%;
     flex-grow: 25;

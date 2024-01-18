@@ -1,5 +1,5 @@
 import Image from "next/image";
-import style from "./mdImage.module.scss";
+import style from "./MdImage.module.scss";
 
 const MdmImage = (props: any) => {
   // console.log(props, "props");

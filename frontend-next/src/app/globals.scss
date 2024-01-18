@@ -102,3 +102,17 @@ button:focus,
 button:focus-visible {
   outline: 4px auto $hoverColor;
 }
+
+// desktop have padding
+@media screen and (min-width: $smallerScreen) {
+  main {
+    padding: 0 1rem;
+  }
+}
+
+// mobile have no padding
+@media screen and (max-width: $smallerScreen) {
+  main {
+    padding: 0;
+  }
+}

@@ -1,15 +1,18 @@
 import { listBlogs } from "@/api/Request";
 import { ArticleCardProps } from "@/components/card/articleCard/articleCard";
 import { ArticleCardList } from "@/components/card/articleCard/articleCardList";
+import OnlyContent from "@/layout/onlyContent";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const articles = await getArticleList();
   return (
-    <div>
-      <ArticleCardList articles={articles} />
-    </div>
+    <OnlyContent>
+      <div>
+        <ArticleCardList articles={articles} />
+      </div>
+    </OnlyContent>
   );
 }
 
