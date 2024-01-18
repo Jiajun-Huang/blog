@@ -12,12 +12,14 @@ services:
       - 8080:8080
     depends_on:
       - mysql
-      
+    volumes:
+      - ./appdata/springboot:/app
+
   nextjs:
     image: nextjs
     depends_on:
       - springboot
-    
+
   mysql:
     image: "mysql:latest"
     ports:
@@ -31,7 +33,7 @@ services:
       - db_password
       - db_root_password
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./appdata/mysql:/var/lib/mysql
 
   # minio:
   #   image: "bitnami/minio:latest"
