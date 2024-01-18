@@ -27,28 +27,38 @@ public class TagController {
     BlogService blogService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> save(@RequestParam String name) {
+    public ResponseEntity<String> createTag(@RequestParam String name) {
         Tag tag = new Tag(name);
         if (tagService.findByName(name) != null) {
             return ResponseEntity.badRequest().body("tag already exists");
         }
-        tagService.saveTag(tag);
+        tagService.createTag(tag);
         return ResponseEntity.ok("success");
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<String> delete(@RequestParam Long id) {
+    @PostMapping("/delete/id")
+    public ResponseEntity<String> deleteTagById(@RequestParam Long id) {
         tagService.deleteById(id);
         return ResponseEntity.ok("success");
     }
 
+    @PostMapping("/delete/name")
+    public ResponseEntity<String> deleteTagByName(@RequestParam String name) {
+        Tag tag = tagService.findByName(name);
+        if (tag == null) {
+            return ResponseEntity.badRequest().body("tag not exists");
+        }
+        tagService.deleteById(tag.getId());
+        return ResponseEntity.ok("success");
+    }
+
     @GetMapping("/list")
-    public ResponseEntity<List<TagVo>> list() {
+    public ResponseEntity<List<TagVo>> listAllTags() {
         return ResponseEntity.ok(tagService.tagsToTagVos(tagService.findAll()));
     }
 
     @GetMapping("/listblogs")
-    public ResponseEntity<List<BlogVo>> listBlogs(@RequestParam Long id) {
+    public ResponseEntity<List<BlogVo>> listBlogsWithTagId(@RequestParam Long id) {
         return ResponseEntity.ok(blogService.blogsToBlogVos(tagService.findBlogsById(id)));
     }
 

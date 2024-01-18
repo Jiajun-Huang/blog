@@ -3,9 +3,12 @@
 .articleMata {
   color: $textColor2;
 
+  & * {
+    color: $textColor2;
+  }
+
   .articleMataItem {
     font-size: 0.8rem;
-    color: $textColor2;
     margin-right: 0.4rem;
 
     &::after {

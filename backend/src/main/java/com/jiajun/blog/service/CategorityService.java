@@ -16,7 +16,7 @@ public class CategorityService {
     @Autowired
     private CategorityRepository categorityRepository;
 
-    public Categority saveCategory(Categority categority) {
+    public Categority createCategory(Categority categority) {
         Categority updatedCategority = findByName(categority.getName());
         if (updatedCategority != null) {
             return null;
@@ -57,7 +57,7 @@ public class CategorityService {
     }
 
     public CategorityVo categorityToCategorityVo(Categority categority) {
-        if(categority == null) {
+        if (categority == null) {
             return null;
         }
         CategorityVo categorityVo = new CategorityVo();
@@ -77,6 +77,10 @@ public class CategorityService {
     public List<Blog> findBlogVosByCategorityId(Long id) {
         List<Blog> blogs = categorityRepository.findBlogsById(id);
         return blogs;
+    }
+
+    public void deleteCategory(Categority categority) {
+        categorityRepository.delete(categority);
     }
 
 }

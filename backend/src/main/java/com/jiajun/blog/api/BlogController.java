@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jiajun.blog.model.Entity.Blog;
-import com.jiajun.blog.model.Entity.User;
 import com.jiajun.blog.model.dto.BlogDto;
 import com.jiajun.blog.model.vo.BlogVo;
 import com.jiajun.blog.service.BlogService;
@@ -42,17 +41,17 @@ public class BlogController {
             @ApiParam() @RequestPart @Valid BlogDto blogDto,
             HttpSession session) {
 
-        User user = (User) session.getAttribute("user");
-        System.out.println("Session ID: " + session.getId());
-        if (user == null) {
-            return ResponseEntity.badRequest().build();
-        } else {
-            blogDto.setUser(user.getId());
-        }
+        // User user = (User) session.getAttribute("user");
+        // System.out.println("Session ID: " + session.getId());
+        // if (user == null) {
+        // return ResponseEntity.badRequest().build();
+        // } else {
+        // blogDto.setUser(user.getId());
+        // }
         System.out.println(blogDto);
         System.out.println(blogDto.getUri());
 
-        blogService.uploadBlog(blogDto, markdown, cover, images, user);
+        blogService.uploadBlog(blogDto, markdown, cover, images, null);
 
         return ResponseEntity.ok().build();
     }

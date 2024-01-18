@@ -1,22 +1,24 @@
-import { BlogControllerApi } from "@/api/openapi/apis/BlogControllerApi";
+import { listBlogs } from "@/api/Request";
 import { ArticleCardProps } from "@/components/card/articleCard/articleCard";
 import { ArticleCardList } from "@/components/card/articleCard/articleCardList";
+import OnlyContent from "@/layout/onlyContent";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const articles = await getArticleList();
   return (
-    <div>
-      <ArticleCardList articles={articles} />
-    </div>
+    <OnlyContent>
+      <div>
+        <ArticleCardList articles={articles} />
+      </div>
+    </OnlyContent>
   );
 }
 
 // get article list from backend
 const getArticleList = async () => {
-  const controller = new BlogControllerApi();
-  const res = await controller.getAllBlog();
+  const res = await listBlogs();
   const articles: ArticleCardProps[] = res.map((item) => {
     const article: ArticleCardProps = {
       title: item.title ? item.title : "",

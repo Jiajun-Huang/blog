@@ -1,6 +1,6 @@
-import { TagControllerApi } from "@/api/openapi";
+// uncache
 
-// uncache 
+import { listTags } from "@/api/Request";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +10,8 @@ const Page = async () => {
 };
 
 const getTags = async () => {
-  const controller = new TagControllerApi();
-  const res = await controller.list();
-  return res;
+  const tags = await listTags();
+  return tags;
 };
 
 export default Page;

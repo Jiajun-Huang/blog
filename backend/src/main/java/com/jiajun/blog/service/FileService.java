@@ -20,6 +20,9 @@ public class FileService {
 
     public String uploadFile(MultipartFile file, String relativePath) {
         // Save file to file system
+        if(file == null) {
+            return null;
+        }
         Path targetLocation = Paths.get(BASE_PATH.toString(), relativePath, file.getOriginalFilename())
                 .toAbsolutePath()
                 .normalize();

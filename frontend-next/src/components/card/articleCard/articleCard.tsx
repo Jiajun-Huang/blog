@@ -25,21 +25,21 @@ export const ArticleCard = ({
   uri,
 }: ArticleCardProps) => {
   return (
-    <Link href={articleRoute + uri}>
-      <BaseCard className={style.articleCard} hover>
-        <div className={style.articleCardContainer}>
+    <BaseCard className={style.articleCard} hover>
+      <div className={style.articleCardContainer}>
+        <Link href={articleRoute + uri}>
           <div className={style.title}> {title}</div>
-          <div className={style.meta}>
-            <ArticleMeta
-              createDate={createDate}
-              updateDate={updateDate}
-              category={category}
-              tags={tags}
-            />
-          </div>
-          <div className={style.desc}>{desc}</div>
+        </Link>
+        <div className={style.meta}>
+          <ArticleMeta
+            createDate={createDate}
+            updateDate={updateDate}
+            category={category}
+            tags={tags}
+          />
         </div>
-      </BaseCard>
-    </Link>
+        <div className={style.desc}>{desc}</div>
+      </div>
+    </BaseCard>
   );
 };

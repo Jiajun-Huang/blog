@@ -28,25 +28,27 @@ public class CategorityController {
     BlogService blogService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> save(@RequestParam String name) {
+    public ResponseEntity<String> createCategory(@RequestParam String name) {
         if (categorityService.findByName(name) != null) {
             return ResponseEntity.badRequest().body("categority already exists");
         }
         Categority categority = new Categority(name);
-        categorityService.saveCategory(categority);
+        categorityService.createCategory(categority);
         return ResponseEntity.ok("success");
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<String> delete(@RequestParam Long id) {
-        if (categorityService.findById(id) == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<String> deleteCategoryByName(@RequestParam String name) {
+        Categority categority = categorityService.findByName(name);
+        if (categority == null) {
+            return ResponseEntity.badRequest().body("categority not exists");
         }
+        categorityService.deleteCategory(categority);
         return ResponseEntity.ok("success");
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<CategorityVo>> list() {
+    public ResponseEntity<List<CategorityVo>> listCategory() {
         List<CategorityVo> categorityVos = new ArrayList<>();
         List<Categority> categorities = categorityService.findAll();
         for (Categority categority : categorities) {
@@ -57,8 +59,14 @@ public class CategorityController {
     }
 
     @GetMapping("/listblogs")
-    public ResponseEntity<List<BlogVo>> listBlogs(@RequestParam Long id) {
-        return ResponseEntity.ok(blogService.blogsToBlogVos(categorityService.findBlogsById(id)));
+    public ResponseEntity<List<BlogVo>> listBlogsWithCategory(@RequestParam String name) {
+        Categority categority = categorityService.findByName(name);
+        if (categority == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        List<BlogVo> blogs = blogService.findBlogsByCategorityId(categority.getId());
+        return ResponseEntity.ok(blogs);
     }
 
 }
