@@ -29,4 +29,4 @@ docker-build: backend-build
 
 .PHONY: docker-up
 docker-up:
-	docker-compose up -d
+	docker compose up -d
