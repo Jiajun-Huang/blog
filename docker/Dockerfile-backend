@@ -25,4 +25,4 @@ VOLUME /uploads
 
 
 # Specify the entry point for running the application
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar", "--spring.profiles.active=pro"]
