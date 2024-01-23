@@ -20,9 +20,9 @@ export const Navbar = () => {
         <Link href={"tags"} className={style.navItem}>
           Tags
         </Link>
-        <Link href={"about"} className={style.navItem}>
+        {/* <Link href={"about"} className={style.navItem}>
           About
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

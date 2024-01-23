@@ -20,7 +20,7 @@
     margin: 1rem;
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: $smallScreen) {
     flex-direction: column;
     .sidebar {
       width: 95%;

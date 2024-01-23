@@ -35,6 +35,20 @@
   }
 }
 
+.smallBanner{
+  min-height: 30vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center horizontally */
+  text-align: center;
+  .subtitle {
+    margin-top: 1rem;
+    font-size: 3.5rem;
+    padding-bottom: 1rem;
+  }
+}
 @keyframes jumpUpDown {
   0%,
   100% {

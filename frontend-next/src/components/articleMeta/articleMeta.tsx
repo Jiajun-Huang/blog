@@ -14,8 +14,8 @@ interface ArticleMetaProps {
   tags: string[];
 }
 
-const tagRoute = "/tag/";
-const categoryRoute = "/category/";
+const tagRoute = "/tags/";
+const categoryRoute = "/categories/";
 
 export const ArticleMeta = ({
   createDate,

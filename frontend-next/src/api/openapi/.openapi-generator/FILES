@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/BlogControllerApi.ts
 apis/CategorityControllerApi.ts
 apis/FileControllerApi.ts

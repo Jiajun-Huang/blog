@@ -1,4 +1,5 @@
 import { listBlogs } from "@/api/Request";
+import SmallBanner from "@/components/banner/smallBanner";
 import { ArticleCardProps } from "@/components/card/articleCard/articleCard";
 import { ArticleCardList } from "@/components/card/articleCard/articleCardList";
 import OnlyContent from "@/layout/onlyContent";
@@ -10,6 +11,7 @@ export default async function Page() {
   return (
     <OnlyContent>
       <div>
+        <SmallBanner title="Articles"></SmallBanner>
         <ArticleCardList articles={articles} />
       </div>
     </OnlyContent>

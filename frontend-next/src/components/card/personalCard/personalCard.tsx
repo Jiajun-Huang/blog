@@ -5,13 +5,13 @@ import style from "./personalCard.module.scss";
 export const PersonalCard = () => {
   return (
     <BaseCard className={style.personalCard}>
-      <Image
+      {/* <Image
         alt="Jiajun Huang"
         src="https://raw.githubusercontent.com/yayitazale/unraid-templates/main/frigate.png"
         width={120}
         height={120}
         className={style.avatar}
-      />
+      /> */}
       <div className={style.name}>Jiajun Huang</div>
       <div className={style.links}>
         <a

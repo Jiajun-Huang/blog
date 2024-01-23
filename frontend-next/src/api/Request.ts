@@ -40,6 +40,20 @@ export const listBlogs = async () => {
   return response;
 };
 
+export const getBlogById = async (id: number) => {
+  const response = await blogController.getBlog({
+    id,
+  });
+  return response;
+};
+
+export const getBlogByUri = async (uri: string) => {
+  const response = await blogController.getBlog({
+    uri,
+  });
+  return response;
+};
+
 // create blog
 interface CreateBlogParams {
   blog: BlogDto;

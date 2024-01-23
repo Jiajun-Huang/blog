@@ -1,0 +1,28 @@
+.WebsiteMetaCard {
+  margin: auto;
+  padding: 1.8rem;
+
+  .itemHeadline {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: left;
+  }
+
+  .webinfoItem {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    
+
+    .itemName {
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .itemValue {
+      margin-bottom: 0.5rem;
+      text-align: right;
+    }
+  }
+}

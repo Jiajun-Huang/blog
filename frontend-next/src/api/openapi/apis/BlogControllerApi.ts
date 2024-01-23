@@ -116,7 +116,7 @@ export class BlogControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async getBlogRaw(requestParameters: GetBlogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blog>> {
+    async getBlogRaw(requestParameters: GetBlogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlogVo>> {
         const queryParameters: any = {};
 
         if (requestParameters.uri !== undefined) {
@@ -136,12 +136,12 @@ export class BlogControllerApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => BlogFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => BlogVoFromJSON(jsonValue));
     }
 
     /**
      */
-    async getBlog(requestParameters: GetBlogRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blog> {
+    async getBlog(requestParameters: GetBlogRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlogVo> {
         const response = await this.getBlogRaw(requestParameters, initOverrides);
         return await response.value();
     }

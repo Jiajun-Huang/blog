@@ -1,0 +1,14 @@
+@import "../../styles/variables.scss";
+
+.Tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
+
+  .tagItem {
+    font-size: 1.3rem;
+    margin: 1rem;
+  }
+}

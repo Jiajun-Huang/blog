@@ -75,9 +75,10 @@ body {
 a {
   text-decoration: inherit;
   color: inherit;
-}
-a:hover {
-  color: $hoverColor;
+
+  &:hover {
+    color: $hoverColor;
+  }
 }
 
 h1 {
