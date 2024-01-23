@@ -2,14 +2,14 @@ version: "3"
 
 services:
   nginx:
-    image: jiajunhuang430/nginx
+    # image: jiajunhuang430/nginx
     build:
       context: ../nginx
       dockerfile: ../docker/Dockerfile-nginx
     ports:
       - 80:80
   springboot:
-    image: jiajunhuang430/springboot
+    # image: jiajunhuang430/springboot
     build:
       context: ../backend
       dockerfile: ../docker/Dockerfile-backend
@@ -18,15 +18,17 @@ services:
       - 8080:8080
     depends_on:
       - mysql
-      
+    volumes:
+      - ./appdata/springboot/uploads:/app/uploads
+
   nextjs:
-    image: jiajunhuang430/nextjs
+    # image: jiajunhuang430/nextjs
     build:
       context: ../frontend-next
       dockerfile: ../docker/Dockerfile-frontend
     depends_on:
       - springboot
-    
+
   mysql:
     image: "mysql:latest"
     ports:
@@ -34,23 +36,27 @@ services:
     environment:
       MYSQL_DATABASE: blog
       MYSQL_USER: jiajun
-      MYSQL_PASSWORD_FILE: /run/secrets/db_password
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_PASSWORD: jiajun
+      MYSQL_ROOT_PASSWORD: jiajun
+      # MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      # MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
     secrets:
       - db_password
       - db_root_password
+    volumes:
+      - mysql:/var/lib/mysql
 
-  minio:
-    image: "bitnami/minio:latest"
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    environment:
-      MINIO_ROOT_USER: minio-root-user
-      MINIO_ROOT_PASSWORD_FILE: /run/secrets/minio-root-password
-    secrets:
-      - oss_password
-      - oss_root_password
+  # minio:
+  #   image: "bitnami/minio:latest"
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001"
+  #   environment:
+  #     MINIO_ROOT_USER: minio-root-user
+  #     MINIO_ROOT_PASSWORD_FILE: /run/secrets/minio-root-password
+  #   secrets:
+  #     - oss_password
+  #     - oss_root_password
 
 secrets:
   db_password:
@@ -61,3 +67,6 @@ secrets:
     file: ./secrets/oss_password.txt
   oss_root_password:
     file: ./secrets/oss_root_password.txt
+
+volumes:
+  mysql:
