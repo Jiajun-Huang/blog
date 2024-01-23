@@ -4,7 +4,7 @@ backend:
 
 .PHONY: backend-build
 backend-build:
-	mvn -f ./backend/pom.xml clean -Dmaven.test.skip=true -Dspring-boot.run.profiles=pro package
+	mvn -f ./backend/pom.xml install
 
 .PHONY: frontend
 frontend:
@@ -20,7 +20,6 @@ admin:
 
 .PHONY: docker-build
 docker-build: backend-build
-
 	docker compose -f ./docker/docker-compose.yml build springboot
 	docker compose -f ./docker/docker-compose.yml up -d mysql
 	docker compose -f ./docker/docker-compose.yml up -d springboot
