@@ -57,7 +57,7 @@ public class BlogController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Blog> getBlog(
+    public ResponseEntity<BlogVo> getBlog(
             @RequestParam(required = false) String uri,
             @RequestParam(required = false) Long id) {
 
@@ -71,8 +71,8 @@ public class BlogController {
         if (blog == null) {
             return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok(blog);
+        BlogVo blogVo = blogService.blogToBlogVo(blog);
+        return ResponseEntity.ok(blogVo);
 
     }
 
