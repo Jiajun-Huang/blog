@@ -33,3 +33,14 @@ docker-up:
 .PHONY: docker-down
 docker-down:
 	docker compose -f ./docker/docker-compose.yml down
+
+docker-deploy:
+	ssh amazon "sudo service docker start"
+	docker-compose -H "ssh://amazon" -f ./docker/docker-compose-deploy.yml down
+	docker-compose -H "ssh://amazon" -f ./docker/docker-compose-deploy.yml build springboot
+	docker-compose -H "ssh://amazon" -f ./docker/docker-compose-deploy.yml up -d mysql
+	docker-compose -H "ssh://amazon" -f ./docker/docker-compose-deploy.yml up -d springboot
+	docker-compose -H "ssh://amazon" -f ./docker/docker-compose-deploy.yml build
+	docker-compose -H "ssh://amazon" -f ./docker/docker-compose-deploy.yml up -d
+	docker-compose -H "ssh://amazon" -f ./docker/docker-compose-deploy.yml up -d nginx # something nginx is not starting
+ 

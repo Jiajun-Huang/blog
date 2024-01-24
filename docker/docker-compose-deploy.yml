@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  nginx:
+    # image: jiajunhuang430/nginx
+    build:
+      context: ../nginx
+      dockerfile: ../docker/Dockerfile-nginx
+    ports:
+      - 80:80
+  springboot:
+    # image: jiajunhuang430/springboot
+    build:
+      context: ../backend
+      dockerfile: ../docker/Dockerfile-backend
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+    volumes:
+      - /home/ec2-user/blog/appdata/springboot/uploads:/app/uploads
+
+  nextjs:
+    # image: jiajunhuang430/nextjs
+    build:
+      context: ../frontend-next
+      dockerfile: ../docker/Dockerfile-frontend
+    depends_on:
+      - springboot
+
+  mysql:
+    image: "mysql:8.3"
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: blog
+      MYSQL_USER: jiajun
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets:
+      - db_password
+      - db_root_password
+    volumes:
+      - /home/ec2-user/blog/appdata/mysql:/var/lib/mysql
+
+secrets:
+  db_password:
+    file: /home/ec2-user/blog/secrets/db_password.txt
+  db_root_password:
+    file: /home/ec2-user/blog/secrets/db_root_password.txt
+  oss_password:
+    file: /home/ec2-user/blog/secrets/oss_password.txt
+  oss_root_password:
+    file: /home/ec2-user/blog/secrets/oss_root_password.txt
