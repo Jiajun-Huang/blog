@@ -4,11 +4,16 @@ import "katex/dist/katex.min.css";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 // import collapse from "remark-collapse";
+import dynamic from "next/dynamic";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import MdCode from "./components/code/MdCode";
-import "./markdown.style.scss";
 import MdImage from "./components/image/MdImage";
+import style from "./markdown.module.scss";
+
+const NoSSR = dynamic(() => import("./components/image/MdImage"), {
+  ssr: false,
+});
 
 interface Props {
   children: string;
@@ -21,7 +26,7 @@ const MarkDown = ({ children, urlTransform, ...otherProps }: Props) => {
   }
 
   return (
-    <div className="Markdown" {...otherProps}>
+    <div className={style.Markdown} {...otherProps}>
       <ReactMarkdown
         remarkPlugins={[remarkMath, remarkGfm]}
         rehypePlugins={[rehypeKatex, rehypeSlug]}
@@ -29,7 +34,7 @@ const MarkDown = ({ children, urlTransform, ...otherProps }: Props) => {
         components={{
           code: MdCode as any,
           image: MdImage as any,
-          // img: MdImage as any,
+          img: MdImage as any,
         }}
       >
         {children}

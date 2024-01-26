@@ -1,18 +1,19 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { oneDark as CodeStyle } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import style from "./mdcode.module.scss";
 // import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const MdCode = (props: any) => {
-  const { children, className, ...rest } = props;
+  const { node, children, className, ...rest } = props;
   const match = /language-(\w+)/.exec(className || "");
   if (match) {
     return (
-      <div className="mdcode">
+      <div className={style.mdcode}>
         <SyntaxHighlighter
           {...rest}
           PreTag="div"
           language={match[1]}
-          style={oneDark}
+          style={CodeStyle}
         >
           {String(children).replace(/\n$/, "")}
         </SyntaxHighlighter>

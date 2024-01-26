@@ -1,4 +1,6 @@
-const backendBaseUrl = "http://springboot:8080/file/download?path=";
+import { BASE_PATH } from "@/api/openapi";
+
+const backendBaseUrl = BASE_PATH + "/file/download?path=";
 
 export default function ImageUrl(uri: string, src: string | undefined) {
   // if it is from the web then return the src

@@ -6,7 +6,9 @@ import { Sidebar } from "@/components/sidebar/sidebar";
 import { ContentAndSidebar } from "@/layout/contentAndSidebar";
 import styles from "./page.module.scss";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "auto",
+  revalidate = 60 * 60 * 24;
+  
 
 export default async function Home() {
   let articles: ArticleCardProps[] = [];

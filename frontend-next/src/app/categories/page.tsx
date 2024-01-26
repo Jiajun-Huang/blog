@@ -2,9 +2,11 @@ import { listCategories } from "@/api/Request";
 import { BaseCard } from "@/components/card/baseCard";
 import OnlyContent from "@/layout/onlyContent";
 
-import styles from "./page.module.scss";
 import SmallBanner from "@/components/banner/smallBanner";
-export const dynamic = "force-dynamic";
+import styles from "./page.module.scss";
+
+export const dynamic = "auto",
+  revalidate = 60 * 60 * 24;
 
 const Page = async () => {
   const categorities = await getcategorities();

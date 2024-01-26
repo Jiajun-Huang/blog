@@ -7,12 +7,24 @@ import { BaseCard } from "@/components/card/baseCard";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import { ContentAndSidebar } from "@/layout/contentAndSidebar";
 import ImageUrl from "@/util/imageurl";
-
-export const dynamic = "force-dynamic";
-
+import { Metadata } from "next";
+import style from "./page.module.scss";
 interface PageProps {
   params: {
     uri: string;
+  };
+}
+
+export const dynamic = "auto",
+  revalidate = 60 * 60 * 24;
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const article = await getArticleData(params.uri);
+  return {
+    title: article.title || "",
+    description: article.title || "",
   };
 }
 
@@ -22,7 +34,7 @@ async function Page({ params }: PageProps) {
   const urlTransform = ImageUrl.bind(null, params.uri);
 
   return (
-    <>
+    <div className={style.singleBlog}>
       <SmallBanner title={article.title || ""}>
         <ArticleMeta
           createDate={article.createTime || new Date()}
@@ -32,14 +44,14 @@ async function Page({ params }: PageProps) {
         />
       </SmallBanner>
       <ContentAndSidebar>
-        <BaseCard hover={false}>
+        <BaseCard hover={false} className={style.content}>
           <Markdown urlTransform={urlTransform}>
             {await getArticleContent(path)}
           </Markdown>
         </BaseCard>
         <Sidebar />
       </ContentAndSidebar>
-    </>
+    </div>
   );
 }
 

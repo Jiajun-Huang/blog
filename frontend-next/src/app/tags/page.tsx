@@ -7,7 +7,9 @@ import OnlyContent from "@/layout/onlyContent";
 
 import Link from "next/link";
 import styles from "./page.module.scss";
-export const dynamic = "force-dynamic";
+
+export const dynamic = "auto",
+  revalidate = 60 * 60 * 24;
 
 const Page = async () => {
   const tags = await getTags();

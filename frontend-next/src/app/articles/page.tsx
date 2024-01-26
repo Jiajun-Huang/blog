@@ -4,7 +4,8 @@ import { ArticleCardProps } from "@/components/card/articleCard/articleCard";
 import { ArticleCardList } from "@/components/card/articleCard/articleCardList";
 import OnlyContent from "@/layout/onlyContent";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "auto",
+  revalidate = 60 * 60 * 24;
 
 export default async function Page() {
   const articles = await getArticleList();
